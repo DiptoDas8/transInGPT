@@ -62,6 +62,7 @@ from newsplease import NewsPlease  # Assuming you have the newsplease library in
 
 def collect_news():
     all_jsons = [f for f in os.listdir('../url_data/') if f.endswith('.json') and f.startswith('fox')]
+    all_jsons = sorted(all_jsons)
 
     for fname in all_jsons:
         if fname.replace('.json', '')+'.xlsx' in os.listdir('../news_data/'):
@@ -79,6 +80,9 @@ def collect_news():
         failed_urls = set()
 
         with tqdm(total=len(list_of_urls), dynamic_ncols=True) as pbar:  # Initialize the progress bar
+            # Prepend the filename from all_jsons to the description
+            pbar.set_description(fname) 
+
             for i, url in enumerate(list_of_urls):
                 try:
                     article = NewsPlease.from_url(url)

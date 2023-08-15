@@ -62,6 +62,7 @@ from newsplease import NewsPlease  # Assuming you have the newsplease library in
 
 def collect_news():
     all_jsons = [f for f in os.listdir('../url_data/') if f.endswith('.json') and f.startswith('msnbc')]
+    all_jsons = sorted(all_jsons)
 
     for fname in all_jsons:
         if fname.replace('.json', '')+'.xlsx' in os.listdir('../news_data/'):

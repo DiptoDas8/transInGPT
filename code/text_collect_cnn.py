@@ -65,14 +65,14 @@ def collect_news():
     all_jsons = sorted(all_jsons)
 
     for fname in all_jsons:
-        if fname.replace('.json', '')+'.xlsx' in os.listdir('../news_data/'):
+        if fname.replace('.json', '')+'.xlsx' in os.listdir('../news_data/xlsx_data/'):
             print('{} already done'.format(fname))
             continue
         with open('../url_data/'+fname, 'r', encoding='utf-8') as fin:
             file_data = json.load(fin)
             list_of_urls = [entry['url'] for entry in file_data]
 
-            with open('../news_data/'+fname.replace('.json','')+'.txt', 'w', encoding='utf-8') as fout:
+            with open('../news_data/all_urls/'+fname.replace('.json','')+'.txt', 'w', encoding='utf-8') as fout:
                 for u in list_of_urls:
                     fout.write(u+'\n')
 
@@ -98,9 +98,9 @@ def collect_news():
                 pbar.update(1)  # Update the progress bar
 
         df = pd.DataFrame(articles_list)
-        df.to_excel('../news_data/'+fname.replace('.json', '')+'.xlsx', index=False)
+        df.to_excel('../news_data/xlsx_data/'+fname.replace('.json', '')+'.xlsx', index=False)
 
-        with open('../news_data/failed_urls-{}.txt'.format(fname.replace('.json', '')), 'w', encoding='utf-8') as fout:
+        with open('../news_data/failed_urls/failed_urls-{}.txt'.format(fname.replace('.json', '')), 'w', encoding='utf-8') as fout:
             for url in list(failed_urls):
                 fout.write(url+'\n')
 
